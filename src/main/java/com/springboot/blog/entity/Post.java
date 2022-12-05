@@ -13,8 +13,9 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
  * @Data annotation is A shortcut for @ToString, @EqualsAndHashCode,
@@ -22,7 +23,8 @@ import lombok.NoArgsConstructor;
  *         and @RequiredArgsConstructor! ie, it generates all boilerplate
  *         normally associated with POJO
  */
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity //
