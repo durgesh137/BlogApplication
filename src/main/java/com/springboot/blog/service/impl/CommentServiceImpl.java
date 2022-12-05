@@ -3,6 +3,7 @@ package com.springboot.blog.service.impl;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -21,11 +22,15 @@ public class CommentServiceImpl implements CommentService {
 	private CommentRepository commentRepository;
 	private PostRepository postRepository;
 
+	// injecting the ModelMapper now
+	private ModelMapper mapper;
+
 	// constructor for dependency injection, autowired annotation not required
-	public CommentServiceImpl(CommentRepository commentRepository, PostRepository postRepository) {
+	public CommentServiceImpl(CommentRepository commentRepository, PostRepository postRepository, ModelMapper mapper) {
 		super();
 		this.commentRepository = commentRepository;
 		this.postRepository = postRepository;
+		this.mapper = mapper;
 	}
 
 	@Override
@@ -48,18 +53,21 @@ public class CommentServiceImpl implements CommentService {
 	// method to map comment to dto
 	private CommentDto mapToDto(Comment comment) {
 		// id, name, email, body
-		CommentDto dto = new CommentDto(comment.getId(), comment.getName(), comment.getEmail(), comment.getBody());
+		// CommentDto dto = new CommentDto(comment.getId(), comment.getName(), comment.getEmail(), comment.getBody());
+		CommentDto dto = mapper.map(comment, CommentDto.class);
 		return dto;
 	}
 
 	// mapping dto to entity
 	private Comment mapToEntity(CommentDto dto) {
-		Comment comment = new Comment();
-		// population comment
-		comment.setId(dto.getId());
-		comment.setName(dto.getName());
-		comment.setEmail(dto.getEmail());
-		comment.setBody(dto.getBody());
+//		Comment comment = new Comment();
+//		// population comment
+//		comment.setId(dto.getId());
+//		comment.setName(dto.getName());
+//		comment.setEmail(dto.getEmail());
+//		comment.setBody(dto.getBody());
+		//using mapper for dto to entity conversion
+		Comment comment = mapper.map(dto, Comment.class);
 		return comment;
 	}
 

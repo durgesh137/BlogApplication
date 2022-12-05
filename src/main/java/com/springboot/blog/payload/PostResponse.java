@@ -2,7 +2,6 @@ package com.springboot.blog.payload;
 
 import java.util.List;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
@@ -14,4 +13,5 @@ public class PostResponse {
 	private long totalElements;
 	private int totalPages;
 	private boolean last;
+	
 }
