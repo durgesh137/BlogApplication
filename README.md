@@ -1,2 +1,2 @@
 # BlogApplication
-This project is developed using Spring boot, data JPA, MySQLl, and more
+This project is developed using Spring boot, data JPA, MySQL, and more
