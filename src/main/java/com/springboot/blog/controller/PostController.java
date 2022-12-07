@@ -17,6 +17,8 @@ import com.springboot.blog.payload.PostResponse;
 import com.springboot.blog.service.PostService;
 import com.springboot.blog.utils.AppConstants;
 
+import jakarta.validation.Valid;
+
 @RestController // for @ResponseBody and @Controller
 @RequestMapping("/api/posts")
 public class PostController {
@@ -32,22 +34,22 @@ public class PostController {
 
 	// 1. create blog post
 	@PostMapping
-	public ResponseEntity<PostDto> createPost(@RequestBody PostDto postDto) {
+	public ResponseEntity<PostDto> createPost(@Valid @RequestBody PostDto postDto) {
 		return new ResponseEntity<>(postService.createPost(postDto), HttpStatus.CREATED);
 
 	}
 
 	// 2. Get all posts stored in database
-	// adding pagination and sorting support now with pageNo pageSize, 
-	//further dynamic ascending or descending order based on request
-	@GetMapping 
+	// adding pagination and sorting support now with pageNo pageSize,
+	// further dynamic ascending or descending order based on request
+	@GetMapping
 	public ResponseEntity<PostResponse> getAllPosts(
 			@RequestParam(value = "pageNo", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER, required = false) int pageNo,
 			@RequestParam(value = "pageSize", defaultValue = AppConstants.DEFAULT_PAGE_SIZE, required = false) int pageSize,
 			@RequestParam(value = "sortBy", defaultValue = AppConstants.DEFAULT_SORT_BY, required = false) String sortBy,
 			@RequestParam(value = "sortDir", defaultValue = AppConstants.DEFAULT_SORT_DIRECTION, required = false) String sortDirection) {
-		return new ResponseEntity<PostResponse>(
-				postService.getAllPosts(pageNo, pageSize, sortBy, sortDirection), HttpStatus.OK);
+		return new ResponseEntity<PostResponse>(postService.getAllPosts(pageNo, pageSize, sortBy, sortDirection),
+				HttpStatus.OK);
 	}
 
 	// 3. method provides the Post based on the id
@@ -59,7 +61,7 @@ public class PostController {
 	// 4. method updates post based on id
 	@PutMapping("/{id}")
 	public ResponseEntity<PostDto> updatePostById(@PathVariable("id") long postId,
-			@RequestBody PostDto updatedPostDto) {
+			@Valid @RequestBody PostDto updatedPostDto) {
 		return new ResponseEntity<PostDto>(postService.updatePostById(postId, updatedPostDto), HttpStatus.OK);
 	}
 
